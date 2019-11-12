@@ -1,0 +1,16 @@
+<div class="root">
+
+  <div class="header">
+    <app-header></app-header>
+  </div>
+
+  <div class="inner">
+    <div class="gallery" *ngIf="images$| async as images">
+      <img
+        class="gallery__image"
+        *ngFor="let image of images"
+        [src]="image.urls.thumb" [alt]="image.alt_description"
+      />
+    </div>
+  </div>
+</div>

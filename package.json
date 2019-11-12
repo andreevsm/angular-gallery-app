@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "lint": "ng lint",
+    "lint": "tslint src/**/**/*.ts --fix",
     "stylelint": "stylelint src/**/*.css",
     "hooks:commit": "lint-staged",
     "predeploy": "yarn run build",
@@ -38,7 +38,12 @@
     "stylelint": "^11.1.1",
     "stylelint-config-standard": "^19.0.0",
     "ts-node": "~7.0.0",
-    "tslint": "~5.11.0",
+    "tslint": "^5.11.0",
+    "tslint-consistent-codestyle": "^1.16.0",
+    "tslint-defocus": "^2.0.6",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-origin-ordered-imports-rule": "^1.2.2",
+    "tslint-rxjs-subject-restrictions-rule": "^1.0.4",
     "typescript": "~3.5.3"
   },
   "lint-staged": {

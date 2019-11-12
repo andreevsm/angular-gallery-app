@@ -1,0 +1,40 @@
+.root {
+  background-color: #6200ee;
+  height: 200px;
+  width: 100%;
+}
+
+.header {
+  padding: 24px;
+
+  &__inner {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__form {
+    max-width: 350px;
+    width: 100%;
+  }
+}
+
+.form {
+
+  &__input {
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid black;
+    outline: 0;
+    font-size: 16px;
+    color: white;
+    width: 100%;
+
+    &::placeholder {
+      color: white;
+    }
+  }
+}
