@@ -1,7 +1,9 @@
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { GalleryService } from 'src/app/shared/models/gallery';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+
+import { GalleryService } from '../../../shared/models/gallery';
 
 @Component({
   templateUrl: './header.component.html',
@@ -25,7 +27,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
 
     this.subscription.add(
-      this.searchForm.valueChanges.subscribe(({ search }) => {
+      this.searchForm.valueChanges.pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      ).subscribe(({ search }) => {
         this.galleryService.searchTerm$.next(search);
       })
     );

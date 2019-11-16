@@ -8,3 +8,9 @@ export interface IImage {
     thumb: string;
   };
 }
+
+export interface ISearchImageData {
+  total: number;
+  total_pages: number;
+  results: IImage[];
+}

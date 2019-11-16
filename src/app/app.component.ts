@@ -1,5 +1,11 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnInit,
+  HostListener,
+  OnDestroy
+} from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
 
 import { IImage, GalleryService } from './shared/models/gallery';
 
@@ -9,22 +15,56 @@ import { IImage, GalleryService } from './shared/models/gallery';
   styleUrls: [ './app.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
-  public images$: Observable<IImage[]>;
+  public page = 1;
+  private subscription = new Subscription();
+
+  get images$(): Observable<IImage[]> {
+    return this.galleryService.images$;
+  }
 
   constructor (
     private galleryService: GalleryService
   ) {}
 
   public ngOnInit(): void {
-    this.images$ = this.galleryService.fetchImages();
+    this.subscription.add(
+      this.galleryService.fetchImages(this.page).subscribe()
+    );
 
-    this.galleryService.searchTerm$
-      .subscribe(data => {
-        if (data) {
-          this.images$ = this.galleryService.fetchImagesByTerm(data);
-        }
-      });
+    this.subscription.add(
+      this.galleryService.searchTerm$
+        .subscribe(searchTerm => {
+          if (searchTerm) {
+            this.page = 1;
+            this.galleryService.fetchImagesByTerm(searchTerm, this.page).subscribe();
+          }
+        })
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  @HostListener('window:scroll')
+  public onScroll(): void {
+    if (this.bottomReached()) {
+      this.subscription.add(
+        this.galleryService.searchTerm$.subscribe(searchTerm => {
+          this.page++;
+          if (searchTerm) {
+            this.galleryService.fetchImagesByTerm(searchTerm, this.page).subscribe();
+          } else {
+            this.galleryService.fetchImages(this.page).subscribe();
+          }
+        })
+      );
+    }
+  }
+
+  public bottomReached(): boolean {
+    return (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
   }
 }

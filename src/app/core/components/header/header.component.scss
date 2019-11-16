@@ -1,5 +1,7 @@
+@import '../../../variables';
+
 .root {
-  background-color: #6200ee;
+  background-color: $primary;
   height: 200px;
   width: 100%;
 }
@@ -22,19 +24,18 @@
 }
 
 .form {
-
   &__input {
     padding: 8px 16px;
     background-color: transparent;
     border: 0;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $black;
     outline: 0;
     font-size: 16px;
-    color: white;
+    color: $white;
     width: 100%;
 
     &::placeholder {
-      color: white;
+      color: $white;
     }
   }
 }

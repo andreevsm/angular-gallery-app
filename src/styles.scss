@@ -1,12 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@import './app/variables';
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: white;
+  color: $white;
   font-family: 'Roboto', sans-serif;
 }
 
 body {
-  background-color: black;
+  background-color: $black;
 }
