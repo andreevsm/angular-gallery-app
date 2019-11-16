@@ -1,15 +1,16 @@
 {
   "name": "angular-gallery-app",
   "version": "0.0.0",
+  "homepage": "https://andreevsm.github.io/angular-gallery-app",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href https://andreevsm.github.io/angular-gallery-app/",
+    "build": "ng build --prod --base-href https://andreevsm.github.io/angular-gallery-app",
     "lint": "tslint --project .",
     "stylelint": "stylelint src/**/*.css",
     "hooks:commit": "lint-staged",
-    "predeploy": "yarn run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist/angular-gallery-app"
   },
   "private": true,
   "dependencies": {
