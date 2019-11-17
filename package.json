@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href https://andreevsm.github.io/angular-gallery-app",
+    "build": "ng build --prod",
     "lint": "tslint --project .",
     "stylelint": "stylelint src/**/*.css",
     "hooks:commit": "lint-staged",
