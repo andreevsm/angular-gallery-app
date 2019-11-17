@@ -6,6 +6,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { IImage, GalleryService } from './shared/models/gallery';
 
@@ -52,14 +53,15 @@ export class AppComponent implements OnInit, OnDestroy {
   public onScroll(): void {
     if (this.bottomReached()) {
       this.subscription.add(
-        this.galleryService.searchTerm$.subscribe(searchTerm => {
-          this.page++;
-          if (searchTerm) {
-            this.galleryService.fetchImagesByTerm(searchTerm, this.page).subscribe();
-          } else {
-            this.galleryService.fetchImages(this.page).subscribe();
-          }
-        })
+        this.galleryService.searchTerm$
+          .pipe(
+            tap(() => this.page++),
+            switchMap(searchTerm => searchTerm
+              ? this.galleryService.fetchImagesByTerm(searchTerm, this.page)
+              : this.galleryService.fetchImages(this.page)
+            )
+          )
+          .subscribe()
       );
     }
   }
