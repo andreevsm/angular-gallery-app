@@ -17,7 +17,7 @@ export class GalleryService {
   ) {}
 
   public fetchImages(page: number): Observable<IImage[]> {
-    return this.http.get<IImage[]>(`/photos?page=${page}`)
+    return this.http.get<IImage[]>(`/photos?page=${page}&per_page=16`)
       .pipe(
         tap((images: IImage[]) => this.images$.next([
           ...this.images$.value,
@@ -27,7 +27,7 @@ export class GalleryService {
   }
 
   public fetchImagesByTerm(query: string, page: number): Observable<ISearchImageData> {
-    return this.http.get<ISearchImageData>(`/search/photos?page=${page}`, {
+    return this.http.get<ISearchImageData>(`/search/photos?page=${page}&per_page=16`, {
       params: { query }
     }).pipe(
       tap(({ results }) => {
